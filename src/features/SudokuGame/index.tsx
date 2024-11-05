@@ -113,7 +113,7 @@ const SudokuGame = () => {
   }, [boaredStore]);
 
   return (
-    <>
+    <div className="w-screen h-screen flex justify-between items-center flex-col gap-2 p-1">
       <BoaredColumn onChangeValue={handleChangeCol} />
 
       <div className="w-96 flex justify-between items-center">
@@ -176,7 +176,7 @@ const SudokuGame = () => {
           Solved
         </ActionButton>
       </div>
-    </>
+    </div>
   );
 };
 

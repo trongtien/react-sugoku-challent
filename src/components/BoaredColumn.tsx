@@ -12,7 +12,7 @@ const BoaredColumn = ({ onChangeValue }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="h-96 w-96 flex justify-center items-center justify-items-center border-2 border-black">
+      <div className="h-[70%] w-full flex justify-center items-center justify-items-center border-2 border-black">
         <div role="status">
           <svg
             aria-hidden="true"
@@ -37,7 +37,7 @@ const BoaredColumn = ({ onChangeValue }: Props) => {
   }
 
   return (
-    <div className="h-96 w-96 grid grid-cols-9 border-2 border-black">
+    <div className="h-[70%] w-full grid grid-cols-9 border-2 border-black">
       {boaredGame?.map((row: number[], rowIndex: number) => {
         return (
           <Fragment key={`${rowIndex}-row`}>
