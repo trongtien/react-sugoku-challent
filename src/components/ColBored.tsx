@@ -14,8 +14,6 @@ const ColBoared = memo(({ colIndex, rowIndex, value, onChangeVal }: Props) => {
     return onChangeVal && onChangeVal(rowIndex, colIndex, result);
   };
 
-  console.log(`re-render`, colIndex, rowIndex, value);
-
   return (
     <input
       key={colIndex}
