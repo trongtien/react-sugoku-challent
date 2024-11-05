@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect } from "react";
 import useBoared from "../../hooks/useBoared";
 import BoaredColumn from "../../components/BoaredColumn";
 import ActionButton from "../../components/ActionButton";
+import StatusGame from "../../components/StatusGame";
 
 type LevelGame = "easy" | "medium" | "hard" | "random";
 
@@ -139,6 +140,10 @@ const SudokuGame = () => {
         >
           Clear
         </ActionButton>
+      </div>
+
+      <div className="w-96 flex justify-between items-center">
+        <StatusGame />
       </div>
 
       <div className="w-96 flex justify-between items-center">
