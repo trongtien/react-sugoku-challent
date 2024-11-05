@@ -3,17 +3,23 @@ import { create } from "zustand";
 interface BoaredStored {
   loadinGame: boolean;
   boared: number[][];
+  levelGame: string;
   statusGameSection: string;
   setBored: (boaredGame: number[][]) => void;
   setStatusGame: (status: string) => void;
   setLoadingBoared: (isLoading: boolean) => void;
+  setLevelGame: (level: string) => void;
   updateValueCol: (rowIndex: number, colIndex: number, value: number) => void;
 }
 
 const useBoared = create<BoaredStored>((set) => ({
   loadinGame: true,
+  levelGame: "easy",
   boared: [],
   statusGameSection: "unsolved",
+
+  setLevelGame: (level: string) =>
+    set((state) => ({ ...state, levelGame: level })),
 
   setLoadingBoared: (status: boolean) =>
     set((state) => ({ ...state, loadinGame: status })),

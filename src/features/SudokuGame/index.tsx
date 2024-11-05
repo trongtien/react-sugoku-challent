@@ -76,8 +76,9 @@ const SudokuGame = () => {
   const handleChangeLevel = useCallback(
     (level: LevelGame) => {
       loadBoared(level);
+      boaredStore.setLevelGame(level);
     },
-    [loadBoared],
+    [boaredStore, loadBoared],
   );
 
   const handleCheckValidate = useCallback(async () => {
@@ -118,19 +119,31 @@ const SudokuGame = () => {
       <div className="w-96 flex justify-between items-center">
         <h3 className="font-medium">Generate:</h3>
 
-        <ActionButton onActionClick={() => handleChangeLevel("easy")}>
+        <ActionButton
+          onActionClick={() => handleChangeLevel("easy")}
+          className={boaredStore.levelGame === "easy" ? "font-medium" : ""}
+        >
           Easy
         </ActionButton>
 
-        <ActionButton onActionClick={() => handleChangeLevel("medium")}>
+        <ActionButton
+          onActionClick={() => handleChangeLevel("medium")}
+          className={boaredStore.levelGame === "medium" ? "font-medium" : ""}
+        >
           Medium
         </ActionButton>
 
-        <ActionButton onActionClick={() => handleChangeLevel("hard")}>
+        <ActionButton
+          onActionClick={() => handleChangeLevel("hard")}
+          className={boaredStore.levelGame === "hard" ? "font-medium" : ""}
+        >
           Hard
         </ActionButton>
 
-        <ActionButton onActionClick={() => handleChangeLevel("random")}>
+        <ActionButton
+          onActionClick={() => handleChangeLevel("random")}
+          className={boaredStore.levelGame === "random" ? "font-medium" : ""}
+        >
           Random
         </ActionButton>
 
@@ -150,6 +163,7 @@ const SudokuGame = () => {
         <ActionButton
           className="border border-1 px-3 py-1"
           onActionClick={handleCheckValidate}
+          isDisabled={boaredStore.statusGameSection === "solved"}
         >
           Check
         </ActionButton>
@@ -157,6 +171,7 @@ const SudokuGame = () => {
         <ActionButton
           className="border border-1 px-3 py-1"
           onActionClick={handleSolve}
+          isDisabled={boaredStore.statusGameSection === "solved"}
         >
           Solved
         </ActionButton>
