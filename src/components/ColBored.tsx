@@ -25,7 +25,7 @@ const ColBoared = memo(({ colIndex, rowIndex, value, onChangeVal }: Props) => {
           ["border-r-2"]: colIndex === 2 || colIndex === 5,
         },
       )}
-      value={value}
+      value={value === 0 ? "" : value}
       onChange={(event) => handleChange(event.target.value)}
       min={0}
       max={9}

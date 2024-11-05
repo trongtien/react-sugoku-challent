@@ -53,7 +53,7 @@ const Boared = () => {
 
   const handleSolve = useCallback(async () => {
     const formData = new FormData();
-    formData.append("board", boaredStore.boared?.toString());
+    formData.append("board", JSON.stringify(boaredStore.boared));
 
     const response = await fetch("https://sugoku.onrender.com/solve", {
       method: "post",
@@ -62,7 +62,6 @@ const Boared = () => {
 
     const jsonData = await response.json();
     const solutionSolve = jsonData?.solution ?? [];
-
     boaredStore.setBored(solutionSolve);
   }, [boaredStore]);
 
@@ -76,7 +75,7 @@ const Boared = () => {
 
   const handleCheckValidate = useCallback(async () => {
     const formData = new FormData();
-    formData.append("board", boaredStore.boared?.toString());
+    formData.append("board", JSON.stringify(boaredStore.boared));
 
     const response = await fetch("https://sugoku.onrender.com/validate", {
       method: "post",
@@ -87,8 +86,22 @@ const Boared = () => {
     const statusValidate = jsonData.status;
 
     boaredStore.setStatusGame(statusValidate);
+  }, [boaredStore]);
 
-    return;
+  const handleClearColValue = useCallback(() => {
+    const boaredNone = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ];
+
+    boaredStore.setBored(boaredNone);
   }, [boaredStore]);
 
   return (
@@ -115,6 +128,7 @@ const Boared = () => {
         onCheckValidate={handleCheckValidate}
         onSolve={handleSolve}
         onChangeLevel={handleChangeLevel}
+        onClear={handleClearColValue}
       />
     </>
   );

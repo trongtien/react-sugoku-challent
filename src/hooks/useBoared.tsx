@@ -16,7 +16,10 @@ const useBoared = create<BoaredStored>((set) => ({
     set((state) => ({ ...state, statusGameSection: status })),
 
   setBored: (boredGame: number[][]) =>
-    set((state) => ({ ...state, boared: boredGame })),
+    set((state) => ({
+      ...state,
+      boared: boredGame,
+    })),
 
   updateValueCol: (rowIndex: number, colIndex: number, value: number) =>
     set((state) => {
