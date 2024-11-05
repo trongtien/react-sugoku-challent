@@ -19,7 +19,7 @@ const ColBoared = memo(({ colIndex, rowIndex, value, onChangeVal }: Props) => {
       key={colIndex}
       type="number"
       className={classNames(
-        "border border-black bg-white text-center font-mono",
+        "border border-black bg-white text-center font-mono w-full h-full text-2xl",
         {
           ["border-b-2"]: rowIndex === 2 || rowIndex === 5,
           ["border-r-2"]: colIndex === 2 || colIndex === 5,

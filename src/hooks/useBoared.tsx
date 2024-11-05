@@ -19,7 +19,11 @@ const useBoared = create<BoaredStored>((set) => ({
   statusGameSection: "unsolved",
 
   setLevelGame: (level: string) =>
-    set((state) => ({ ...state, levelGame: level })),
+    set((state) => ({
+      ...state,
+      levelGame: level,
+      statusGameSection: "unsolved",
+    })),
 
   setLoadingBoared: (status: boolean) =>
     set((state) => ({ ...state, loadinGame: status })),

@@ -113,70 +113,83 @@ const SudokuGame = () => {
   }, [boaredStore]);
 
   return (
-    <div className="w-screen h-screen flex justify-between items-center flex-col gap-2 p-1">
+    <section className="w-screen h-screen flex justify-around items-center flex-col gap-2 p-1">
       <BoaredColumn onChangeValue={handleChangeCol} />
 
-      <div className="w-96 flex justify-between items-center">
-        <h3 className="font-medium">Generate:</h3>
+      <div className="flex flex-col gap-1">
+        <div className="w-96 flex justify-between items-center">
+          <h3 className="font-medium">Generate:</h3>
 
-        <ActionButton
-          onActionClick={() => handleChangeLevel("easy")}
-          className={boaredStore.levelGame === "easy" ? "font-medium" : ""}
-        >
-          Easy
-        </ActionButton>
+          <ActionButton
+            onActionClick={() => handleChangeLevel("easy")}
+            className={boaredStore.levelGame === "easy" ? "font-medium" : ""}
+          >
+            Easy
+          </ActionButton>
 
-        <ActionButton
-          onActionClick={() => handleChangeLevel("medium")}
-          className={boaredStore.levelGame === "medium" ? "font-medium" : ""}
-        >
-          Medium
-        </ActionButton>
+          <ActionButton
+            onActionClick={() => handleChangeLevel("medium")}
+            className={boaredStore.levelGame === "medium" ? "font-medium" : ""}
+          >
+            Medium
+          </ActionButton>
 
-        <ActionButton
-          onActionClick={() => handleChangeLevel("hard")}
-          className={boaredStore.levelGame === "hard" ? "font-medium" : ""}
-        >
-          Hard
-        </ActionButton>
+          <ActionButton
+            onActionClick={() => handleChangeLevel("hard")}
+            className={boaredStore.levelGame === "hard" ? "font-medium" : ""}
+          >
+            Hard
+          </ActionButton>
 
-        <ActionButton
-          onActionClick={() => handleChangeLevel("random")}
-          className={boaredStore.levelGame === "random" ? "font-medium" : ""}
-        >
-          Random
-        </ActionButton>
+          <ActionButton
+            onActionClick={() => handleChangeLevel("random")}
+            className={boaredStore.levelGame === "random" ? "font-medium" : ""}
+          >
+            Random
+          </ActionButton>
 
-        <ActionButton
-          onActionClick={() => handleClearColValue()}
-          className="border border-1 px-3 py-1"
-        >
-          Clear
-        </ActionButton>
+          <ActionButton
+            onActionClick={() => handleClearColValue()}
+            className="border border-1 px-3 py-1"
+          >
+            Clear
+          </ActionButton>
+        </div>
+
+        <div className="w-96 flex justify-between items-center">
+          <StatusGame />
+        </div>
+
+        <div className="w-96 flex justify-between items-center">
+          <ActionButton
+            className="border border-1 px-3 py-1"
+            onActionClick={handleCheckValidate}
+            isDisabled={boaredStore.statusGameSection === "solved"}
+          >
+            Check
+          </ActionButton>
+
+          {boaredStore.statusGameSection === "solved" ? (
+            <ActionButton
+              className="border border-1 px-3 py-1"
+              onActionClick={() =>
+                handleChangeLevel(boaredStore.levelGame as LevelGame)
+              }
+            >
+              Reset Game
+            </ActionButton>
+          ) : null}
+
+          <ActionButton
+            className="border border-1 px-3 py-1"
+            onActionClick={handleSolve}
+            isDisabled={boaredStore.statusGameSection === "solved"}
+          >
+            Solved
+          </ActionButton>
+        </div>
       </div>
-
-      <div className="w-96 flex justify-between items-center">
-        <StatusGame />
-      </div>
-
-      <div className="w-96 flex justify-between items-center">
-        <ActionButton
-          className="border border-1 px-3 py-1"
-          onActionClick={handleCheckValidate}
-          isDisabled={boaredStore.statusGameSection === "solved"}
-        >
-          Check
-        </ActionButton>
-
-        <ActionButton
-          className="border border-1 px-3 py-1"
-          onActionClick={handleSolve}
-          isDisabled={boaredStore.statusGameSection === "solved"}
-        >
-          Solved
-        </ActionButton>
-      </div>
-    </div>
+    </section>
   );
 };
 
