@@ -7,17 +7,17 @@ type Props = {
 } & PropsWithChildren;
 
 const ActionButton = memo(
-  ({ onActionClick, children, className, isDisabled = false }: Props) => {
+  ({ onActionClick, children, className = '', isDisabled = false }: Props) => {
     return (
       <button
-        className={className}
+        className={`text-base ${className}`}
         onClick={onActionClick}
         disabled={isDisabled}
       >
         {children}
       </button>
     );
-  },
+  }
 );
 
 export default ActionButton;

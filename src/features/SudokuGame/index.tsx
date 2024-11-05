@@ -12,7 +12,7 @@ const SudokuGame = () => {
 
   useEffect(() => {
     loadBored("easy");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadBored = useCallback(
@@ -21,7 +21,7 @@ const SudokuGame = () => {
         baredStore.setLoadingBored(true);
         const difficulty = getLevelGame(level);
         const response = await fetch(
-          `${pathApi.SUDOKU_BOARD}?difficulty=${difficulty}`,
+          `${pathApi.SUDOKU_BOARD}?difficulty=${difficulty}`
         );
 
         const json = await response.json();
@@ -32,7 +32,7 @@ const SudokuGame = () => {
         baredStore.setLoadingBored(false);
       }
     },
-    [baredStore],
+    [baredStore]
   );
 
   const getLevelGame = (level: LevelGame): string => {
@@ -55,7 +55,7 @@ const SudokuGame = () => {
       return baredStore.updateValueCol(rowIndex, colIndex, val);
     },
 
-    [baredStore],
+    [baredStore]
   );
 
   const handleSolve = useCallback(async () => {
@@ -77,7 +77,7 @@ const SudokuGame = () => {
       loadBored(level);
       baredStore.setLevelGame(level);
     },
-    [baredStore, loadBored],
+    [baredStore, loadBored]
   );
 
   const handleCheckValidate = useCallback(async () => {
@@ -113,6 +113,7 @@ const SudokuGame = () => {
 
   return (
     <section className="w-screen h-screen flex justify-around items-center flex-col gap-2 p-1">
+      <h1 className="font-medium text-2xl mt-2">Sudoku Game</h1>
       <BoredColumn onChangeValue={handleChangeCol} />
 
       <div className="flex flex-col gap-1">
