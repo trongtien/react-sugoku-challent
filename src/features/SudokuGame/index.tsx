@@ -1,7 +1,9 @@
 import { memo, useCallback, useEffect } from "react";
 import useBoared from "../../hooks/useBoared";
-import ActionGame, { LevelGame } from "../../components/ActionGame";
 import BoaredColumn from "../../components/BoaredColumn";
+import ActionButton from "../../components/ActionButton";
+
+type LevelGame = "easy" | "medium" | "hard" | "random";
 
 const SudokuGame = () => {
   const boaredStore = useBoared();
@@ -112,12 +114,48 @@ const SudokuGame = () => {
     <>
       <BoaredColumn onChangeValue={handleChangeCol} />
 
-      <ActionGame
-        onCheckValidate={handleCheckValidate}
-        onSolve={handleSolve}
-        onChangeLevel={handleChangeLevel}
-        onClear={handleClearColValue}
-      />
+      <div className="w-96 flex justify-between items-center">
+        <h3 className="font-medium">Generate:</h3>
+
+        <ActionButton onActionClick={() => handleChangeLevel("easy")}>
+          Easy
+        </ActionButton>
+
+        <ActionButton onActionClick={() => handleChangeLevel("medium")}>
+          Medium
+        </ActionButton>
+
+        <ActionButton onActionClick={() => handleChangeLevel("hard")}>
+          Hard
+        </ActionButton>
+
+        <ActionButton onActionClick={() => handleChangeLevel("random")}>
+          Random
+        </ActionButton>
+
+        <ActionButton
+          onActionClick={() => handleClearColValue()}
+          className="border border-1 px-3 py-1"
+        >
+          Clear
+        </ActionButton>
+      </div>
+
+      <div className="w-96 flex justify-between items-center">
+        <ActionButton
+          className="border border-1 px-3 py-1"
+          onActionClick={handleCheckValidate}
+        >
+          Check
+        </ActionButton>
+
+        <ActionButton
+          className="border border-1 px-3 py-1"
+          onActionClick={handleSolve}
+        >
+          Solved
+        </ActionButton>
+      </div>
     </>
   );
 };
