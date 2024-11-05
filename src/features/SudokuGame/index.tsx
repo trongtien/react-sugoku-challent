@@ -1,39 +1,38 @@
 import { memo, useCallback, useEffect } from "react";
-import useBoared from "../../hooks/useBoared";
-import BoaredColumn from "../../components/BoaredColumn";
+import useBored from "../../hooks/useBored";
+import BoredColumn from "../../components/BoredColumn";
 import ActionButton from "../../components/ActionButton";
 import StatusGame from "../../components/StatusGame";
+import { pathApi } from "../../utils/pathApi";
 
 type LevelGame = "easy" | "medium" | "hard" | "random";
 
 const SudokuGame = () => {
-  const boaredStore = useBoared();
+  const baredStore = useBored();
 
   useEffect(() => {
-    loadBoared("easy");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadBored("easy");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadBoared = useCallback(
+  const loadBored = useCallback(
     async (level: LevelGame) => {
       try {
-        boaredStore.setLoadingBoared(true);
-
+        baredStore.setLoadingBored(true);
         const difficulty = getLevelGame(level);
-
         const response = await fetch(
-          `https://sugoku.onrender.com/board?difficulty=${difficulty}`,
+          `${pathApi.SUDOKU_BOARD}?difficulty=${difficulty}`,
         );
 
         const json = await response.json();
-        const boaredGame = json?.board ?? [];
+        const baredGame = json?.board ?? [];
 
-        boaredStore.setBored(boaredGame);
+        baredStore.setBored(baredGame);
       } catch {
-        boaredStore.setLoadingBoared(false);
+        baredStore.setLoadingBored(false);
       }
     },
-    [boaredStore],
+    [baredStore],
   );
 
   const getLevelGame = (level: LevelGame): string => {
@@ -53,39 +52,39 @@ const SudokuGame = () => {
 
   const handleChangeCol = useCallback(
     (rowIndex: number, colIndex: number, val: number) => {
-      return boaredStore.updateValueCol(rowIndex, colIndex, val);
+      return baredStore.updateValueCol(rowIndex, colIndex, val);
     },
 
-    [boaredStore],
+    [baredStore],
   );
 
   const handleSolve = useCallback(async () => {
     const formData = new FormData();
-    formData.append("board", JSON.stringify(boaredStore.boared));
+    formData.append("board", JSON.stringify(baredStore.bored));
 
-    const response = await fetch("https://sugoku.onrender.com/solve", {
+    const response = await fetch(pathApi.SUDOKU_SOLVE, {
       method: "post",
       body: formData,
     });
 
     const jsonData = await response.json();
     const solutionSolve = jsonData?.solution ?? [];
-    boaredStore.setBored(solutionSolve);
-  }, [boaredStore]);
+    baredStore.setBored(solutionSolve);
+  }, [baredStore]);
 
   const handleChangeLevel = useCallback(
     (level: LevelGame) => {
-      loadBoared(level);
-      boaredStore.setLevelGame(level);
+      loadBored(level);
+      baredStore.setLevelGame(level);
     },
-    [boaredStore, loadBoared],
+    [baredStore, loadBored],
   );
 
   const handleCheckValidate = useCallback(async () => {
     const formData = new FormData();
-    formData.append("board", JSON.stringify(boaredStore.boared));
+    formData.append("board", JSON.stringify(baredStore.bored));
 
-    const response = await fetch("https://sugoku.onrender.com/validate", {
+    const response = await fetch(pathApi.SUDOKU_VALIDATE, {
       method: "post",
       body: formData,
     });
@@ -93,11 +92,11 @@ const SudokuGame = () => {
     const jsonData = await response.json();
     const statusValidate = jsonData.status;
 
-    boaredStore.setStatusGame(statusValidate);
-  }, [boaredStore]);
+    baredStore.setStatusGame(statusValidate);
+  }, [baredStore]);
 
   const handleClearColValue = useCallback(() => {
-    const boaredNone = [
+    const boredNone = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -109,12 +108,12 @@ const SudokuGame = () => {
       [0, 0, 0, 0, 0, 0, 0, 0, 0],
     ];
 
-    boaredStore.setBored(boaredNone);
-  }, [boaredStore]);
+    baredStore.setBored(boredNone);
+  }, [baredStore]);
 
   return (
     <section className="w-screen h-screen flex justify-around items-center flex-col gap-2 p-1">
-      <BoaredColumn onChangeValue={handleChangeCol} />
+      <BoredColumn onChangeValue={handleChangeCol} />
 
       <div className="flex flex-col gap-1">
         <div className="w-96 flex justify-between items-center">
@@ -122,28 +121,28 @@ const SudokuGame = () => {
 
           <ActionButton
             onActionClick={() => handleChangeLevel("easy")}
-            className={boaredStore.levelGame === "easy" ? "font-medium" : ""}
+            className={baredStore.levelGame === "easy" ? "font-medium" : ""}
           >
             Easy
           </ActionButton>
 
           <ActionButton
             onActionClick={() => handleChangeLevel("medium")}
-            className={boaredStore.levelGame === "medium" ? "font-medium" : ""}
+            className={baredStore.levelGame === "medium" ? "font-medium" : ""}
           >
             Medium
           </ActionButton>
 
           <ActionButton
             onActionClick={() => handleChangeLevel("hard")}
-            className={boaredStore.levelGame === "hard" ? "font-medium" : ""}
+            className={baredStore.levelGame === "hard" ? "font-medium" : ""}
           >
             Hard
           </ActionButton>
 
           <ActionButton
             onActionClick={() => handleChangeLevel("random")}
-            className={boaredStore.levelGame === "random" ? "font-medium" : ""}
+            className={baredStore.levelGame === "random" ? "font-medium" : ""}
           >
             Random
           </ActionButton>
@@ -164,16 +163,16 @@ const SudokuGame = () => {
           <ActionButton
             className="border border-1 px-3 py-1"
             onActionClick={handleCheckValidate}
-            isDisabled={boaredStore.statusGameSection === "solved"}
+            isDisabled={baredStore.statusGameSection === "solved"}
           >
             Check
           </ActionButton>
 
-          {boaredStore.statusGameSection === "solved" ? (
+          {baredStore.statusGameSection === "solved" ? (
             <ActionButton
               className="border border-1 px-3 py-1"
               onActionClick={() =>
-                handleChangeLevel(boaredStore.levelGame as LevelGame)
+                handleChangeLevel(baredStore.levelGame as LevelGame)
               }
             >
               Reset Game
@@ -183,7 +182,7 @@ const SudokuGame = () => {
           <ActionButton
             className="border border-1 px-3 py-1"
             onActionClick={handleSolve}
-            isDisabled={boaredStore.statusGameSection === "solved"}
+            isDisabled={baredStore.statusGameSection === "solved"}
           >
             Solved
           </ActionButton>

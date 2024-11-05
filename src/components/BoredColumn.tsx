@@ -1,14 +1,14 @@
 import { Fragment, memo } from "react";
-import useBoared from "../hooks/useBoared";
-import ColBoared from "./ColBored";
+import useBored from "../hooks/useBored";
+import ColBored from "./ColBored";
 
 type Props = {
   onChangeValue: (rowIndex: number, colIndex: number, value: number) => void;
 };
 
-const BoaredColumn = ({ onChangeValue }: Props) => {
-  const boaredGame = useBoared((state) => state.boared);
-  const isLoading = useBoared((state) => state.loadinGame);
+const BoredColumn = ({ onChangeValue }: Props) => {
+  const boredGame = useBored((state) => state.bored);
+  const isLoading = useBored((state) => state.loadingGame);
 
   if (isLoading) {
     return (
@@ -38,11 +38,11 @@ const BoaredColumn = ({ onChangeValue }: Props) => {
 
   return (
     <div className="h-[70%] w-full grid grid-cols-9 border-2 border-black">
-      {boaredGame?.map((row: number[], rowIndex: number) => {
+      {boredGame?.map((row: number[], rowIndex: number) => {
         return (
           <Fragment key={`${rowIndex}-row`}>
             {row?.map((col: number, colIndex: number) => (
-              <ColBoared
+              <ColBored
                 key={`${rowIndex}-${colIndex}`}
                 colIndex={colIndex}
                 rowIndex={rowIndex}
@@ -57,4 +57,4 @@ const BoaredColumn = ({ onChangeValue }: Props) => {
   );
 };
 
-export default memo(BoaredColumn);
+export default memo(BoredColumn);

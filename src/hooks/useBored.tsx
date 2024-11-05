@@ -1,21 +1,21 @@
 import { create } from "zustand";
 
-interface BoaredStored {
-  loadinGame: boolean;
-  boared: number[][];
+interface BoredStored {
+  loadingGame: boolean;
+  bored: number[][];
   levelGame: string;
   statusGameSection: string;
-  setBored: (boaredGame: number[][]) => void;
+  setBored: (boredGame: number[][]) => void;
   setStatusGame: (status: string) => void;
-  setLoadingBoared: (isLoading: boolean) => void;
+  setLoadingBored: (isLoading: boolean) => void;
   setLevelGame: (level: string) => void;
   updateValueCol: (rowIndex: number, colIndex: number, value: number) => void;
 }
 
-const useBoared = create<BoaredStored>((set) => ({
-  loadinGame: true,
+const useBored = create<BoredStored>((set) => ({
+  loadingGame: true,
   levelGame: "easy",
-  boared: [],
+  bored: [],
   statusGameSection: "unsolved",
 
   setLevelGame: (level: string) =>
@@ -25,8 +25,8 @@ const useBoared = create<BoaredStored>((set) => ({
       statusGameSection: "unsolved",
     })),
 
-  setLoadingBoared: (status: boolean) =>
-    set((state) => ({ ...state, loadinGame: status })),
+  setLoadingBored: (status: boolean) =>
+    set((state) => ({ ...state, loadingGame: status })),
 
   setStatusGame: (status: string) =>
     set((state) => ({ ...state, statusGameSection: status })),
@@ -34,17 +34,17 @@ const useBoared = create<BoaredStored>((set) => ({
   setBored: (boredGame: number[][]) =>
     set((state) => ({
       ...state,
-      boared: boredGame,
-      loadinGame: false,
+      bored: boredGame,
+      loadingGame: false,
     })),
 
   updateValueCol: (rowIndex: number, colIndex: number, value: number) =>
     set((state) => {
-      const currentBored = state.boared;
+      const currentBored = state.bored;
       currentBored[rowIndex][colIndex] = value;
 
-      return { ...state, boared: currentBored };
+      return { ...state, bored: currentBored };
     }),
 }));
 
-export default useBoared;
+export default useBored;
